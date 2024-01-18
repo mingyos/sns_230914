@@ -9,28 +9,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sns.post.mapper.SnsMapper;
+import com.sns.like.LikeMapper;
 
 @Controller
-public class SnsController {
+public class TestController {
 	
 	@Autowired
-	private SnsMapper snsMapper;
-	
+	private LikeMapper likeMapper;
+
 	@GetMapping("/test1")
 	@ResponseBody
 	public String test1() {
-		return "hello world!";
+		return "Hello world!";
 	}
 	
 	@GetMapping("/test2")
 	@ResponseBody
-	public Map<String, Object> test2(){
+	public Map<String, Object> test2() {
 		Map<String, Object> result = new HashMap<>();
-		result.put("aaa", 1);
-		result.put("bbb", 2);
-		result.put("ccc", 32);
-		
+		result.put("a", 11);
+		result.put("b", 11);
+		result.put("c", 2);
 		return result;
 	}
 	
@@ -41,9 +40,12 @@ public class SnsController {
 	
 	@GetMapping("/test4")
 	@ResponseBody
-	public List<Map<String,Object>> test4() {
-
-		return snsMapper.selectUserList();
-		
+	public List<Map<String, Object>> test4() {
+		return likeMapper.selectLikeList();
 	}
 }
+
+
+
+
+
