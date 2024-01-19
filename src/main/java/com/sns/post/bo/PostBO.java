@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sns.common.FileManagerService;
 import com.sns.post.entity.PostEntity;
 import com.sns.post.repository.PostRepository;
 
 @Service
 public class PostBO {
-
+	@Autowired
+	private FileManagerService fileManagerService;
+	
 	@Autowired
 	private PostRepository postRepository;
 	
@@ -19,16 +22,22 @@ public class PostBO {
 	public List<PostEntity> getPostList() {
 		return postRepository.findAllByOrderByIdDesc();
 	}
-	public void addPost(int userId, String userLoginId, 
-			String subject, String content, MultipartFile file) {
+	
+	// input: 파라미터들   output:PostEntity
+	public PostEntity addPost(int userId, String userLoginId, 
+			String content, MultipartFile file) {
 		
 		String imagePath = null;
-		
-		// 업로드할 이미지가 있을 때 업로드
+
+		// 이미지가 있으면 업로드 후 imagePath를 받아옴
 		if (file != null) {
 			imagePath = fileManagerService.saveFile(userLoginId, file);
 		}
-		
-		postMapper.insertPost(userId, subject, content, imagePath);
+
+		return postRepository.save(PostEntity.builder()
+				.userId(userId)
+				.content(content)
+				.imagePath(imagePath)
+				.build());
 	}
 }
