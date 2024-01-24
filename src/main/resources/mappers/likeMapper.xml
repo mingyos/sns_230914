@@ -9,4 +9,61 @@
 		FROM
 			`like`
 	</select>
+	<!-- 
+	<select id="selectLikeCountByPostIdUserId" parameterType="map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+	</select>
+	<select id="selectLikeCountByPostId">
+		SELECT
+			COUNT(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+	</select>
+	 -->
+	<insert id="insertLike">
+		INSERT INTO `like`
+		(
+			`postId`
+			,`userId`
+			,`createdAt`
+		)
+		VALUES
+		(
+			#{postId}
+			, #{userId}
+			, NOW()
+		)
+	</insert>
+	
+	<delete id="deleteLikeByPostIdUserId">
+		DELETE
+		FROM	
+			`like`
+		WHERE
+			`postId` =  #{postId}
+		AND
+			`userId` = #{userId}
+	</delete>
+
+	
+	<!-- like count 쿼리 하나로 합치기 -->
+	<select id="selectLikeCountByPostIdOrUserId">
+		SELECT
+			COUNT(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+			<if test="userId != null">			
+			AND `userId` = #{userId}
+			</if>
+	</select>
 </mapper>
