@@ -22,7 +22,7 @@ public class UserrestController {
 
 	@Autowired
 	private UserBO userBO;
-
+	//////
 	/**
 	 * 아이디 중복확인 API
 	 * 
